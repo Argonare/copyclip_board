@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/">
+    <file>static/close.png</file>
+    <file>static/delete.png</file>
+    <file>static/edit.png</file>
+    <file>static/icon.ico</file>
+    <file>static/short.png</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+/build/
+/dist/
+main.spec
+test.py
+tmp.ui
+/.idea/
