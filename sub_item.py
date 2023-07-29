@@ -1,5 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QFontDatabase, QFont
 from static import *
 
 
@@ -7,7 +7,6 @@ class Ui_Form(QtWidgets.QWidget):
 
     def __init__(self, parent_item, id):
         super().__init__()
-        self.delete_2 = None
         self.edit = None
         self.horizontalLayout = None
         self.horizontalLayoutWidget = None
@@ -17,29 +16,35 @@ class Ui_Form(QtWidgets.QWidget):
 
     def setupUi(self):
         super(Ui_Form, self).__init__()
+        fontDb = QFontDatabase.addApplicationFont(":static/font/ico.ttf")
+        print(QFontDatabase.applicationFontFamilies(fontDb))
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(1)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel()
-
+        self.label.setObjectName("itemLabel")
         self.horizontalLayout.addWidget(self.label)
 
         self.edit = QtWidgets.QPushButton()
         self.edit.setObjectName("edit")
-        self.edit.setIcon(QIcon(":/static/edit.png"))
+        self.edit.setFont(QFont('element'))
         self.edit.setFixedWidth(50)
         self.edit.setFixedHeight(30)
+        self.edit.setObjectName("edit")
+        self.edit.setText(chr(0xe764))
         self.edit.clicked.connect(self.edit_item)
 
-        self.horizontalLayout.addWidget(self.edit)
         self.delete = QtWidgets.QPushButton()
         self.delete.setObjectName("delete")
-        self.delete.setIcon(QIcon(":/static/delete.png"))
+        self.delete.setFont(QFont('element'))
+        self.delete.setText(chr(0xe7c9))
         self.delete.setFixedWidth(50)
         self.delete.setFixedHeight(30)
+        self.delete.setObjectName("delete")
         self.delete.clicked.connect(self.delete_item)
 
+        self.horizontalLayout.addWidget(self.edit)
         self.horizontalLayout.addWidget(self.delete)
         self.horizontalLayout.setStretch(0, 3)
         self.horizontalLayout.setStretch(1, 1)

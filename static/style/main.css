@@ -1,0 +1,66 @@
+#title {
+    margin-top: 6px;
+    margin-left: 10px;
+    color: #999;
+}
+
+#small,#edit,#delete {
+    border-radius: 11px;
+    background: #409EFF;
+    width: 10px;
+    height: 40px;
+    font-size: 20px;
+    color: white;
+    margin: 5px 5px 0 0;
+}
+
+#small:hover,#edit:hover,#delete:hover {
+    background: #f8fbff;
+    border: 1px solid #409EFF;
+    color: #409EFF;
+    cursor: pointer;
+}
+
+#window.QFrame {
+    border-radius: 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: white;
+    margin: 5px;
+}
+
+QMainWindow {
+    background: transparent;
+}
+
+#topBar {
+    border-bottom: 1px solid #ccc;
+}
+
+#list {
+    border: none;
+}
+
+#itemLabel {
+    margin-left: 5px;
+
+}
+QListWidget{
+    padding: 0 10px;
+}
+QListWidget::Item {
+    border-radius: 5px;
+
+}
+
+QListWidget::Item:hover {
+    background: rgb(242, 245, 253);
+    border-radius: 5px;
+}
+
+#edit:hover{
+    color: #409EFF;
+}
+#delete:hover{
+    color: #F56C6C;
+}

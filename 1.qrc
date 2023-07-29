@@ -1,9 +1,7 @@
 <RCC>
   <qresource prefix="/">
-    <file>static/close.png</file>
-    <file>static/delete.png</file>
-    <file>static/edit.png</file>
-    <file>static/icon.ico</file>
-    <file>static/short.png</file>
+    <file>static/img/close.png</file>
+    <file>static/img/icon.ico</file>
+    <file>static/font/ico.ttf</file>
   </qresource>
 </RCC>

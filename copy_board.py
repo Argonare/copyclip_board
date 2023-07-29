@@ -4,8 +4,8 @@ import uuid
 from PyQt6 import QtCore, QtGui, QtWidgets
 import pyperclip
 from PyQt6.QtCore import QPoint, Qt, QEvent
-from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QMainWindow, QListWidgetItem
+from PyQt6.QtGui import QIcon, QColor
+from PyQt6.QtWidgets import QMainWindow, QListWidgetItem, QGraphicsDropShadowEffect
 import common
 import time
 from static import *
@@ -24,35 +24,50 @@ class Ui_MainWindow(QMainWindow):
         self._top_rect = None
         self._padding = 10
         self.listWidget: MySignal | None = None
-        self.label = None
         self.data = [{}]
         self.init_width = 300
         self.init_height = 200
-        self.btnWidth = 40
+        self.btnWidth = 31
         self.btnHeight = 30
         self.moved = True
 
         self.saved_flag = False
         self.title = "剪切板"
         self.SCREEN_WEIGHT = QtGui.QGuiApplication.primaryScreen().geometry().width()
+        self.SCREEN_height = QtGui.QGuiApplication.primaryScreen().geometry().height()
 
     def setup(self):
 
+
+        self.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground,True)
         self.resize(self.init_width, self.init_height)
+        self.move(self.SCREEN_WEIGHT - self.init_width, int(self.SCREEN_height / 2))
         central_widget = QtWidgets.QWidget(self)
-        self.verticalLayoutWidget = QtWidgets.QWidget(central_widget)
+
+        self.verticalLayoutWidget = QtWidgets.QFrame(central_widget)
 
         self.verticalLayoutWidget.setGeometry(0, 0, self.init_width, self.init_height)
+        self.verticalLayoutWidget.setObjectName("window")
+        self.shadow=QGraphicsDropShadowEffect()
+        self.shadow.setBlurRadius(9)
+        self.shadow.setColor(QColor("#ccc"))
+        self.shadow.setOffset(0, 0)
+        self.verticalLayoutWidget.setGraphicsEffect(self.shadow)
+
         vertical_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         vertical_layout.setContentsMargins(0, 0, 0, 0)
         horizontal_layout = QtWidgets.QHBoxLayout()
-        self.label = QtWidgets.QLabel(self.verticalLayoutWidget)
-        self.label.setText("剪切板")
-        horizontal_layout.addWidget(self.label)
+        horizontal_layout.setObjectName("topBar")
+
+        label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        label.setText("剪切板")
+        label.setObjectName("title")
+        horizontal_layout.addWidget(label)
 
         small = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        small.setIcon(QIcon(":/static/short.png"))
+        small.setText("-")
         small.setFixedWidth(self.btnWidth)
+        small.setObjectName("small")
         small.setFixedHeight(self.btnHeight)
 
         horizontal_layout.addWidget(small)
@@ -62,7 +77,7 @@ class Ui_MainWindow(QMainWindow):
         self.listWidget = MySignal(self.verticalLayoutWidget)
         self.listWidget.set_window(self)
         self.listWidget.itemClicked.connect(self.get_item)
-
+        self.listWidget.setObjectName("list")
         self.search = QtWidgets.QTextEdit(self.verticalLayoutWidget)
         self.search.setFixedHeight(30)
         self.search.hide()
@@ -80,7 +95,7 @@ class Ui_MainWindow(QMainWindow):
         self.show()
         # 托盘
         self.tray = QtWidgets.QSystemTrayIcon(self)
-        self.tray.setIcon(QIcon(":/static/short.png"))
+        self.tray.setIcon(QIcon(":/static/ico.ico"))
         self.trayMenu = QtWidgets.QMenu(self)
         show_action = self.trayMenu.addAction("显示")
         quit_action = self.trayMenu.addAction("退出")
