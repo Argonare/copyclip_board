@@ -1,3 +1,4 @@
+import sys
 import uuid
 
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -80,11 +81,9 @@ class Ui_MainWindow(QMainWindow):
         # 托盘
         self.tray = QtWidgets.QSystemTrayIcon(self)
         self.tray.setIcon(QIcon(":/static/short.png"))
-        show_action = QtGui.QAction("显示")
-        quit_action = QtGui.QAction("退出")
-        self.trayMenu = QtWidgets.QMenu()
-        self.trayMenu.addAction(show_action)
-        self.trayMenu.addAction(quit_action)
+        self.trayMenu = QtWidgets.QMenu(self)
+        show_action = self.trayMenu.addAction("显示")
+        quit_action = self.trayMenu.addAction("退出")
         self.tray.setContextMenu(self.trayMenu)
         self.tray.show()
         show_action.triggered.connect(self.show_window)
@@ -216,7 +215,8 @@ class Ui_MainWindow(QMainWindow):
             common.save_data(self.data)
 
     def quit(self):
-        self.close()
+        self.tray.hide()
+        sys.exit()
 
     def onIconClicked(self, reason):
         if self.isMinimized() or not self.isVisible():
