@@ -25,6 +25,7 @@ class Ui_MainWindow(QMainWindow):
         self._padding = 10
         self.listWidget: MySignal | None = None
         self.data = [{}]
+        self.init_data=[[]]
         self.init_width = 300
         self.init_height = 200
         self.btnWidth = 31
@@ -116,20 +117,24 @@ class Ui_MainWindow(QMainWindow):
         q_list = self.listWidget
         self.listWidget.clear()
 
-        for i in self.data:
+        showList=[]
+        for i in self.init_data:
             if text == "":
                 common.add_item(self.listWidget, i)
+                showList.append(i)
             else:
                 if text in i['name']:
                     common.add_item(self.listWidget, i)
+                    showList.append(i)
 
-        print()
+        self.data=showList
 
     def eventFilter(self, watched, event: QtCore.QEvent):
         search: QtWidgets.QTextEdit = self.search
         if watched == search:
             if event.type() == QtCore.QEvent.Type.FocusOut and search.toPlainText() == "":
                 search.hide()
+                self.data=self.init_data
         return super().eventFilter(watched, event)
 
     # 鼠标按下事件
@@ -209,6 +214,7 @@ class Ui_MainWindow(QMainWindow):
     def set_data(self, data, itemLis):
         self.data = data
         self.listWidget.set_item_list(itemLis)
+        self.init_data=data
 
     def get_item(self, item):
         pyperclip.copy(self.data[self.listWidget.currentIndex().row()]['value'])

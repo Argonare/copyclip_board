@@ -17,7 +17,6 @@ class Ui_Form(QtWidgets.QWidget):
     def setupUi(self):
         super(Ui_Form, self).__init__()
         fontDb = QFontDatabase.addApplicationFont(":static/font/ico.ttf")
-        print(QFontDatabase.applicationFontFamilies(fontDb))
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(1)
